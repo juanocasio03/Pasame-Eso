@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+  {# Screen 1 / UI-01, REQ.1.1 field rules #}
+  <form class="form-card" method="post">
+    <h1>Create an account</h1>
+    <label>Name
+      <input name="name" maxlength="64" required>
+    </label>
+    <label>University email
+      <input type="email" name="email" maxlength="64" placeholder="firstname.lastname@upr.edu" required>
+    </label>
+    <label>Username
+      <input name="username" maxlength="20" pattern="[A-Za-z0-9]+" required>
+    </label>
+    <label>Password (8–25 characters)
+      <input type="password" name="password" minlength="8" maxlength="25" required>
+    </label>
+    <button class="btn btn-accent" type="submit">Sign Up</button>
+  </form>
+{% endblock %}

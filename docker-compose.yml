@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file: .env
+    volumes:
+      - pasameeso-data:/srv/pasameeso/instance
+    restart: unless-stopped  # restarts the app if it crashes (NFR-REL-04)
+
+volumes:
+  pasameeso-data:

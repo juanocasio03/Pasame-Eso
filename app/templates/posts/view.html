@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ post['title'] }}{% endblock %}
+{% block content %}
+  {# Screen 4: view post, rating (UI-06), comments (UI-07), report (UI-08) #}
+  <article class="card">
+    <span class="tag">{{ post['course_code'] }}</span>
+    <h1>{{ post['title'] }}</h1>
+    <p class="muted">{{ post['professor'] }} · {{ post['created_at'] }}</p>
+    <p>{{ post['description'] }}</p>
+    <p class="muted">TODO: download link, star rating, comments.</p>
+  </article>
+
+  {% if g.user %}
+    <form class="form-card" method="post" action="{{ url_for('posts.report', post_id=post['id']) }}">
+      <h2>Report this resource</h2>
+      <select name="reason" required>
+        {% for key, label in reasons.items() %}
+          <option value="{{ key }}">{{ label }}</option>
+        {% endfor %}
+      </select>
+      <textarea name="description" maxlength="300" placeholder="Details (required for Other)"></textarea>
+      <button class="btn" type="submit">Report</button>
+    </form>
+  {% endif %}
+{% endblock %}

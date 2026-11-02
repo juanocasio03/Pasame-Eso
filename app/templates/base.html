@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}PasameEso{% endblock %} · PasameEso</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  {# NFR-USE-06: shown only on screens narrower than 1280px (see style.css) #}
+  <div class="narrow-screen-notice">
+    PasameEso is designed for desktop and laptop computers (1280px or wider).
+  </div>
+
+  <nav class="navbar">
+    <a class="brand" href="{{ url_for('main.index') }}">PasameEso</a>
+    <div class="nav-links">
+      <a href="{{ url_for('main.help_page') }}">Help</a>
+      {% if g.user %}
+        <a class="btn btn-accent" href="{{ url_for('posts.create') }}">Create Post</a>
+        {% if g.user['role'] == 'moderator' %}
+          <a href="{{ url_for('moderation.dashboard') }}">Dashboard</a>
+        {% endif %}
+        <span class="muted">{{ g.user['username'] }}</span>
+        <form method="post" action="{{ url_for('auth.logout') }}" class="inline">
+          <button class="btn-link" type="submit">Log out</button>
+        </form>
+      {% else %}
+        <a href="{{ url_for('auth.register') }}">Sign up</a>
+        <a class="btn btn-accent" href="{{ url_for('auth.login') }}">Log In</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="container">
+    {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

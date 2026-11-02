@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Moderator Dashboard{% endblock %}
+{% block content %}
+  {# Screen 5 / UI-09: report queue sorted by frequency (REQ.5.2) #}
+  <h1>Report queue</h1>
+  <table class="table">
+    <thead>
+      <tr><th>Resource</th><th>Course</th><th>Reports</th><th>Latest report</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for item in queue %}
+        <tr>
+          <td><a href="{{ url_for('posts.view', post_id=item['id']) }}">{{ item['title'] }}</a></td>
+          <td>{{ item['course_code'] }}</td>
+          <td>{{ item['report_count'] }}</td>
+          <td>{{ item['latest_report'] }}</td>
+          <td class="muted">TODO: Keep / Edit / Delete</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="muted">No pending reports.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
